@@ -1,7 +1,8 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-import androidx.compose.ui.res.stringResource as vnString
 package com.winlator.star.ui.screens
+
+import androidx.compose.ui.res.stringResource as vnString
 
 import androidx.compose.runtime.mutableIntStateOf
 import com.winlator.star.core.PresetScope
