@@ -26,4 +26,18 @@
     <plurals name="vn_android_added">
         <item quantity="other">Android ゲームを%d件追加しました</item>
     </plurals>
+    <string name="vn_install_phase_files">システムファイルをインストール中</string>
+    <string name="vn_install_phase_prefix">Wine の初期環境を展開中</string>
+    <string name="vn_install_phase_proton">Proton をセットアップ中</string>
+    <string name="vn_install_phase_runtime">実行環境を設定中</string>
+    <string name="vn_install_phase_finish">初期設定の仕上げ中</string>
+    <string name="vn_install_done">インストールが完了しました</string>
+    <string name="vn_proceed">次へ</string>
+    <string name="vn_no_games">まだゲームが登録されていません。＋を押してゲームを追加してください。</string>
+    <string name="vn_no_containers">コンテナがありません。＋を押して作成してください。</string>
+    <string name="vn_add_shortcut">ゲームを追加</string>
+    <string name="vn_contents">コンテンツ</string>
+    <string name="vn_files">ファイル管理</string>
+    <string name="vn_appearance">外観</string>
+    <string name="vn_manage_saves">セーブデータ管理</string>
 </resources>
