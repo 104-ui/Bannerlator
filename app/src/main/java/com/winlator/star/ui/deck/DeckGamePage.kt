@@ -1,5 +1,9 @@
 package com.winlator.star.ui.deck
 
+import androidx.compose.ui.res.stringResource as vnString
+
+import com.winlator.star.R
+
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -535,8 +539,8 @@ internal fun DeckGameMenuList(
                     if (i > 0) DeckRowDivider()
                     val blocked = notInstalled && (key == ENTRY_CONTAINER || entry.action in NEEDS_INSTALL)
                     DeckRow(
-                        title = entry.title,
-                        subtitle = if (blocked) "Download the game first" else entry.hint,
+                        title = if (entry.action == GameMenuAction.ADD_TO_HOME) vnString(R.string.add_to_home_screen) else entry.title,
+                        subtitle = if (blocked) "Download the game first" else if (entry.action == GameMenuAction.ADD_TO_HOME) vnString(R.string.vn_pin_a_launcher_icon_to_android_s_home_screen) else entry.hint,
                         danger = entry.danger,
                         modifier = (if (gi == 0 && i == 0 && firstRequester != null) Modifier.focusRequester(firstRequester) else Modifier)
                             .then(if (blocked) Modifier.alpha(0.45f) else Modifier),
@@ -595,7 +599,7 @@ internal fun DeckGameMenuSheet(
                         .padding(horizontal = 20.dp, vertical = 18.dp),
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text("Game menu", color = cs.onSurface, fontFamily = SoraFamily, fontWeight = FontWeight.Bold, fontSize = 22.sp, modifier = Modifier.weight(1f))
+                        Text(vnString(R.string.vn_game_menu), color = cs.onSurface, fontFamily = SoraFamily, fontWeight = FontWeight.Bold, fontSize = 22.sp, modifier = Modifier.weight(1f))
                         Box(
                             contentAlignment = Alignment.Center,
                             modifier = Modifier
