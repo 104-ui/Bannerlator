@@ -1,5 +1,7 @@
 package com.winlator.star.ui.deck
 
+import androidx.compose.ui.res.stringResource as vnString
+
 import android.content.Context
 import android.os.BatteryManager
 import android.view.KeyEvent
@@ -154,14 +156,14 @@ internal const val DECK_RAILS_MIN_WIDTH_DP = 560
 private const val DECK_WIDE_TABS_DP = 1100
 
 /** The seven Deck destinations, in L1/R1 order. [root] is the route the tab lands on. */
-internal enum class DeckTab(val label: String, val icon: ImageVector, val root: String) {
-    HOME("Home", Icons.Filled.Home, DeckRoutes.HOME),
-    STORES("Stores", Icons.Filled.Storefront, DeckRoutes.STORES),
-    CONTAINERS("Containers", Icons.Filled.Inventory2, Screen.Containers.route),
-    COMPONENTS("Components", Icons.Filled.Extension, DeckRoutes.COMPONENTS),
-    CONTROLS("Controls", Icons.Filled.SportsEsports, DeckRoutes.CONTROLS),
-    TOOLS("Tools", Icons.Filled.Build, DeckRoutes.TOOLS),
-    SETTINGS("Settings", Icons.Filled.Settings, DeckSettingsRoutes.APP),
+internal enum class DeckTab(val labelRes: Int, val icon: ImageVector, val root: String) {
+    HOME(R.string.vn_nav_home, Icons.Filled.Home, DeckRoutes.HOME),
+    STORES(R.string.vn_nav_stores, Icons.Filled.Storefront, DeckRoutes.STORES),
+    CONTAINERS(R.string.containers, Icons.Filled.Inventory2, Screen.Containers.route),
+    COMPONENTS(R.string.vn_nav_components, Icons.Filled.Extension, DeckRoutes.COMPONENTS),
+    CONTROLS(R.string.vn_nav_controls, Icons.Filled.SportsEsports, DeckRoutes.CONTROLS),
+    TOOLS(R.string.vn_nav_tools, Icons.Filled.Build, DeckRoutes.TOOLS),
+    SETTINGS(R.string.settings, Icons.Filled.Settings, DeckSettingsRoutes.APP),
 }
 
 /** Phone bottom bar: these five, and "More" for the rest. */
@@ -801,7 +803,7 @@ private fun DeckCompactTopBar(tab: DeckTab, avatarUrl: String?, onAccount: () ->
     ) {
         DeckMark()
         Text(
-            text = tab.label,
+            text = vnString(tab.labelRes),
             color = MaterialTheme.colorScheme.onSurface,
             fontFamily = SoraFamily,
             fontWeight = FontWeight.Bold,
@@ -859,13 +861,13 @@ private fun DeckTabButton(tab: DeckTab, selected: Boolean, showLabel: Boolean, m
     ) {
         Icon(
             imageVector = tab.icon,
-            contentDescription = tab.label,
+            contentDescription = vnString(tab.labelRes),
             tint = if (selected) accent else cs.onSurfaceVariant,
             modifier = Modifier.size(18.dp),
         )
         if (showLabel) {
             Text(
-                text = tab.label,
+                text = vnString(tab.labelRes),
                 color = if (selected) cs.onSurface else cs.onSurfaceVariant,
                 fontFamily = SoraFamily,
                 fontWeight = FontWeight.SemiBold,
@@ -1105,12 +1107,12 @@ private fun DeckRailButton(tab: DeckTab, selected: Boolean, fixedHeight: Dp = Dp
     ) {
         Icon(
             imageVector = tab.icon,
-            contentDescription = tab.label,
+            contentDescription = vnString(tab.labelRes),
             tint = if (selected) accent else cs.onSurfaceVariant,
             modifier = Modifier.size(20.dp),
         )
         Text(
-            text = tab.label,
+            text = vnString(tab.labelRes),
             color = if (selected) cs.onSurface else cs.onSurfaceVariant,
             fontFamily = NunitoSansFamily,
             fontWeight = FontWeight.ExtraBold,
@@ -1469,16 +1471,16 @@ private fun DeckBottomBar(current: DeckTab, onTab: (DeckTab) -> Unit) {
             .padding(horizontal = 6.dp),
     ) {
         PORTRAIT_MAIN.forEach { t ->
-            BottomBarItem(t.icon, t.label, selected = t == current, modifier = Modifier.weight(1f)) { onTab(t) }
+            BottomBarItem(t.icon, vnString(t.labelRes), selected = t == current, modifier = Modifier.weight(1f)) { onTab(t) }
         }
         Box(modifier = Modifier.weight(1f)) {
-            BottomBarItem(Icons.Filled.GridView, "More", selected = current in moreTabs, modifier = Modifier.fillMaxWidth()) {
+            BottomBarItem(Icons.Filled.GridView, vnString(R.string.vn_nav_more), selected = current in moreTabs, modifier = Modifier.fillMaxWidth()) {
                 moreOpen = true
             }
             DropdownMenu(expanded = moreOpen, onDismissRequest = { moreOpen = false }) {
                 moreTabs.forEach { t ->
                     DropdownMenuItem(
-                        text = { Text(t.label, color = if (t == current) cs.primary else cs.onSurface) },
+                        text = { Text(vnString(t.labelRes), color = if (t == current) cs.primary else cs.onSurface) },
                         leadingIcon = { Icon(t.icon, contentDescription = null, tint = cs.primary) },
                         onClick = { moreOpen = false; onTab(t) },
                     )
