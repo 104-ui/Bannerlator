@@ -1,5 +1,7 @@
 package com.winlator.star.ui.screens
 
+import com.winlator.star.R
+
 import android.app.Activity
 import android.net.Uri
 import android.widget.Toast
@@ -219,7 +221,7 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
                 }
             }
             if (found.isEmpty()) {
-                Toast.makeText(context, "No games found in that folder", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, context.getString(R.string.vn_no_games_found_in_that_folder), Toast.LENGTH_LONG).show()
                 pendingImportContainerIndex = -1
             }
         }
@@ -303,7 +305,7 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
             onDismissRequest = { exePickerFor = null },
             title = {
                 Column {
-                    Text("Choose the game's .exe")
+                    Text(context.getString(R.string.vn_choose_the_game_s_exe))
                     Text(
                         target.name,
                         color = OnSurfaceVariant,
@@ -352,7 +354,7 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
                                     .removePrefix(target.folder.absolutePath)
                                     .removePrefix("/")
                                 Text(
-                                    if (rel.contains('/')) rel.substringBeforeLast('/') else "(folder root)",
+                                    if (rel.contains('/')) rel.substringBeforeLast('/') else context.getString(R.string.vn_folder_root),
                                     color = OnSurfaceVariant,
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
@@ -371,12 +373,12 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
                     exeBrowseForPath = target.exe.absolutePath
                     exePickerFor = null
                     importExeBrowseLauncher.launch(
-                        InAppFilePicker.buildIntent(context, InAppFilePicker.SHORTCUT, "Select the game's .exe")
+                        InAppFilePicker.buildIntent(context, InAppFilePicker.SHORTCUT, context.getString(R.string.vn_select_the_game_s_exe))
                     )
-                }) { Text("Browse…") }
+                }) { Text(context.getString(R.string.vn_browse)) }
             },
             dismissButton = {
-                TextButton(onClick = { exePickerFor = null }) { Text("Cancel") }
+                TextButton(onClick = { exePickerFor = null }) { Text(context.getString(R.string.cancel)) }
             },
         )
     }
@@ -394,10 +396,10 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
             ImportKind.EXE ->
                 if (importUseSystemPicker) importFileLauncher.launch("*/*")
                 else importFileInAppLauncher.launch(
-                    InAppFilePicker.buildIntent(context, InAppFilePicker.SHORTCUT, "Select .exe / .desktop / .lnk", driveCPath = driveC?.absolutePath)
+                    InAppFilePicker.buildIntent(context, InAppFilePicker.SHORTCUT, context.getString(R.string.vn_select_exe_desktop_lnk), driveCPath = driveC?.absolutePath)
                 )
             ImportKind.FOLDER -> importFolderLauncher.launch(
-                InAppFilePicker.buildDirIntent(context, "Select your games folder", driveCPath = driveC?.absolutePath)
+                InAppFilePicker.buildDirIntent(context, context.getString(R.string.vn_select_your_games_folder), driveCPath = driveC?.absolutePath)
             )
         }
     }
@@ -407,12 +409,12 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
     if (showImportMethodPicker) {
         OutlinedAlertDialog(
             onDismissRequest = { showImportMethodPicker = false },
-            title = { Text("Add games") },
+            title = { Text(context.getString(R.string.vn_add_games)) },
             text = {
                 Column {
                     MenuOptionCard(
-                        title = "Add game EXE",
-                        subtitle = "Pick one game's .exe file",
+                        title = context.getString(R.string.vn_add_game_exe),
+                        subtitle = context.getString(R.string.vn_pick_one_game_s_exe_file),
                         icon = Icons.Default.InsertDriveFile,
                     ) {
                         showImportMethodPicker = false
@@ -420,8 +422,8 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
                         showImportContainerPicker = true
                     }
                     MenuOptionCard(
-                        title = "Add games folder",
-                        subtitle = "Pick the folder holding all your games — each one is scanned for its .exe",
+                        title = context.getString(R.string.vn_add_games_folder),
+                        subtitle = context.getString(R.string.vn_pick_the_folder_holding_all_your_games_each_one_is_s),
                         icon = Icons.Default.Folder,
                     ) {
                         showImportMethodPicker = false
@@ -430,8 +432,8 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
                     }
                     // No container: Android games live in their own home (see AndroidGames).
                     MenuOptionCard(
-                        title = "Add Android game",
-                        subtitle = "Pick games installed on this phone — they open as normal Android apps",
+                        title = context.getString(R.string.vn_add_android_game),
+                        subtitle = context.getString(R.string.vn_pick_games_installed_on_this_phone_they_open_as_norm),
                         icon = Icons.Filled.Android,
                     ) {
                         showImportMethodPicker = false
@@ -441,7 +443,7 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
             },
             confirmButton = {},
             dismissButton = {
-                TextButton(onClick = { showImportMethodPicker = false }) { Text("Cancel") }
+                TextButton(onClick = { showImportMethodPicker = false }) { Text(context.getString(R.string.cancel)) }
             },
         )
     }
@@ -459,9 +461,9 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
                     androidAddRunning = false
                     showAndroidPicker = false
                     val message = if (summary.failed == 0) {
-                        "Added ${summary.added} Android game${if (summary.added == 1) "" else "s"}"
+                        context.resources.getQuantityString(R.plurals.vn_android_added, summary.added, summary.added)
                     } else {
-                        "Added ${summary.added}, ${summary.failed} failed — ${summary.failures.firstOrNull().orEmpty()}"
+                        context.getString(R.string.vn_nav_import_mixed, summary.added, summary.failed, summary.failures.firstOrNull().orEmpty())
                     }
                     Toast.makeText(context, message, Toast.LENGTH_LONG).show()
                 }
@@ -473,7 +475,7 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
     if (folderScanRunning) {
         OutlinedAlertDialog(
             onDismissRequest = {},
-            title = { Text("Scanning for games") },
+            title = { Text(context.getString(R.string.vn_scanning_for_games)) },
             text = {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
@@ -504,11 +506,11 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
             },
             title = {
                 Column {
-                    Text("Found ${importable.size} game${if (importable.size == 1) "" else "s"}")
+                    Text(context.resources.getQuantityString(R.plurals.vn_found, importable.size, importable.size))
                     val skipped = folderScanResults.size - importable.size
                     if (skipped > 0) {
                         Text(
-                            "$skipped already added",
+                            context.getString(R.string.vn_nav_skipped, skipped),
                             color = OnSurfaceVariant,
                             style = MaterialTheme.typography.bodySmall,
                         )
@@ -544,7 +546,7 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
                                             modifier = Modifier.height(32.dp),
                                         ) {
                                             Text(
-                                                (if (open) "▾ " else "▸ ") + "Components ($recCount)",
+                                                (if (open) "▾ " else "▸ ") + context.getString(R.string.vn_nav_comp_count, recCount),
                                                 fontSize = 13.sp,
                                             )
                                         }
@@ -578,15 +580,15 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
                             folderScanSelected = emptySet()
                             pendingImportContainerIndex = -1
                             val message = if (summary.failed == 0) {
-                                "Added ${summary.added} game${if (summary.added == 1) "" else "s"}"
+                                context.resources.getQuantityString(R.plurals.vn_added, summary.added, summary.added)
                             } else {
-                                "Added ${summary.added}, ${summary.failed} failed — ${summary.failures.firstOrNull().orEmpty()}"
+                                context.getString(R.string.vn_nav_import_mixed, summary.added, summary.failed, summary.failures.firstOrNull().orEmpty())
                             }
                             Toast.makeText(context, message, Toast.LENGTH_LONG).show()
                         }
                     },
                 ) {
-                    Text(if (folderImportRunning) "Adding…" else "Add $selectedCount")
+                    Text(if (folderImportRunning) context.getString(R.string.vn_adding) else context.getString(R.string.vn_nav_add_count, selectedCount))
                 }
             },
             dismissButton = {
@@ -597,7 +599,7 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
                         folderScanSelected = emptySet()
                         pendingImportContainerIndex = -1
                     },
-                ) { Text("Cancel") }
+                ) { Text(context.getString(R.string.cancel)) }
             },
         )
     }
@@ -610,11 +612,11 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
                 showImportContainerPicker = false
                 pendingImportKind = null
             },
-            title = { Text("Select container") },
+            title = { Text(context.getString(R.string.vn_select_container)) },
             text = {
                 Column {
                     if (containers.isEmpty()) {
-                        Text("No containers found.", color = OnSurfaceVariant)
+                        Text(context.getString(R.string.vn_no_containers_found), color = OnSurfaceVariant)
                     } else {
                         // Scroll the container list so it can't be clipped when there are many
                         // containers and vertical space is tight (landscape). "Pick via system…"
@@ -638,7 +640,7 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
                         }
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 8.dp)) {
                             Checkbox(checked = importUseSystemPicker, onCheckedChange = { importUseSystemPicker = it })
-                            Text("Pick via system…", color = OnSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+                            Text(context.getString(R.string.pick_via_system), color = OnSurfaceVariant, style = MaterialTheme.typography.bodySmall)
                         }
                     }
                 }
@@ -648,7 +650,7 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
                 TextButton(onClick = {
                     showImportContainerPicker = false
                     pendingImportKind = null
-                }) { Text("Cancel") }
+                }) { Text(context.getString(R.string.cancel)) }
             },
         )
     }
@@ -677,7 +679,7 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
             .filter { it.second >= 2 }.maxByOrNull { it.second }?.first?.appId
         OutlinedAlertDialog(
             onDismissRequest = { showRenameDialog = false },
-            title = { Text("Confirm game") },
+            title = { Text(context.getString(R.string.vn_confirm_game)) },
             text = {
                 Column(
                     modifier = Modifier
@@ -699,12 +701,12 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
                     OutlinedTextField(
                         value = confirmNameField,
                         onValueChange = { confirmNameField = it; confirmNameEdited = true },
-                        label = { Text("Game name") },
+                        label = { Text(context.getString(R.string.vn_game_name)) },
                         singleLine = true,
                         trailingIcon = {
                             if (confirmNameField.isNotEmpty()) {
                                 IconButton(onClick = { confirmNameField = ""; confirmNameEdited = true }) {
-                                    Icon(Icons.Default.Close, contentDescription = "Clear")
+                                    Icon(Icons.Default.Close, contentDescription = context.getString(R.string.clear))
                                 }
                             }
                         },
@@ -731,17 +733,17 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
                         if (steamSearching) {
                             CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
                             Spacer(Modifier.width(8.dp))
-                            Text("Searching…")
+                            Text(context.getString(R.string.vn_searching))
                         } else {
                             Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(18.dp))
                             Spacer(Modifier.width(8.dp))
-                            Text("Search Steam")
+                            Text(context.getString(R.string.vn_search_steam))
                         }
                     }
 
                     if (steamSearchResults.isNotEmpty()) {
                         Text(
-                            "Tap a result to set the name + cover art:",
+                            context.getString(R.string.vn_tap_a_result_to_set_the_name_cover_art),
                             color = OnSurfaceVariant,
                             fontSize = 12.sp,
                         )
@@ -785,13 +787,13 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
                                     Text("App ID: ${hit.appId}", fontSize = 11.sp, color = OnSurfaceVariant)
                                 }
                                 if (hit.appId == linkedHit) {
-                                    Text("✓ Linked", fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
+                                    Text(context.getString(R.string.vn_linked), fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
                                 }
                             }
                         }
                     } else if (!steamSearching) {
                         Text(
-                            "Not the right game? Edit the name and tap Search Steam to pick the correct one.",
+                            context.getString(R.string.vn_not_the_right_game_edit_the_name_and_tap_search_stea),
                             color = OnSurfaceVariant,
                             fontSize = 12.sp,
                         )
@@ -845,14 +847,14 @@ fun GameActionsHost(vm: ShortcutsViewModel, actions: ShortcutActions) {
                         }
                     }
                     showRenameDialog = false
-                    Toast.makeText(context, "Shortcut imported.", Toast.LENGTH_SHORT).show()
-                }) { Text("Save") }
+                    Toast.makeText(context, context.getString(R.string.vn_shortcut_imported), Toast.LENGTH_SHORT).show()
+                }) { Text(context.getString(R.string.save)) }
             },
             dismissButton = {
                 TextButton(onClick = {
                     showRenameDialog = false
-                    Toast.makeText(context, "Shortcut imported.", Toast.LENGTH_SHORT).show()
-                }) { Text("Skip") }
+                    Toast.makeText(context, context.getString(R.string.vn_shortcut_imported), Toast.LENGTH_SHORT).show()
+                }) { Text(context.getString(R.string.vn_skip)) }
             },
         )
     }
