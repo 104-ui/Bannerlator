@@ -1,5 +1,9 @@
 package com.winlator.star.ui.deck
 
+import androidx.compose.ui.res.stringResource as vnString
+
+import com.winlator.star.R
+
 import android.content.Context
 import android.graphics.Bitmap
 import androidx.compose.animation.Crossfade
@@ -550,7 +554,7 @@ private fun LibraryToolbar(
         }
         Spacer(Modifier.width(8.dp))
         DeckButton(if (filterCount > 0) "Filters · $filterCount" else "Filter & sort", Icons.Filled.FilterList, onFilter)
-        DeckButton("Add games", Icons.Filled.Add, onAddGame)
+        DeckButton(vnString(R.string.vn_add_games), Icons.Filled.Add, onAddGame)
         IconTile(Icons.Filled.Public, "Community configs", onCommunity)
         // Steam friends and chat; renders only while signed in to Steam.
         Box(
@@ -614,7 +618,7 @@ private fun FilteredEmpty(onClear: () -> Unit, onAddGame: () -> Unit) {
         Text("Clear the filters to see your whole library.", color = cs.onSurfaceVariant, fontSize = 14.sp)
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             DeckButton("Clear filters", Icons.Filled.Close, onClear, primary = true)
-            DeckButton("Add games", Icons.Filled.Add, onAddGame)
+            DeckButton(vnString(R.string.vn_add_games), Icons.Filled.Add, onAddGame)
         }
     }
 }
@@ -683,7 +687,7 @@ private fun LibraryFilterDialog(
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.padding(top = 14.dp)) {
                     DeckButton("Clear filters", Icons.Filled.Close, { onChange(LibraryFilter(sort = filter.sort)) })
                     Spacer(Modifier.weight(1f))
-                    DeckButton("Done", null, onDismiss, primary = true, glyph = "B")
+                    DeckButton(vnString(R.string.wrapper_catalog_close), null, onDismiss, primary = true, glyph = "B")
                 }
             }
         }
@@ -797,8 +801,8 @@ private fun DeckHero(
                     // Room for the focus glow, which a scroll container would otherwise clip.
                     .padding(6.dp),
             ) {
-                DeckButton("Play", Icons.Filled.PlayArrow, onPlay, primary = true, big = true, modifier = Modifier.focusRequester(playRequester))
-                DeckButton("Game page", Icons.Filled.Info, onGamePage)
+                DeckButton(vnString(R.string.vn_play), Icons.Filled.PlayArrow, onPlay, primary = true, big = true, modifier = Modifier.focusRequester(playRequester))
+                DeckButton(vnString(R.string.vn_game_page), Icons.Filled.Info, onGamePage)
                 if (onSettings != null) DeckButton("Settings", Icons.Filled.Tune, onSettings)
                 DeckButton("Options", Icons.Filled.MoreHoriz, onOptions, glyph = "X")
             }
@@ -980,9 +984,9 @@ private fun DeckListRow(
         }
         Spacer(Modifier.width(10.dp))
         if (compact) {
-            IconTile(Icons.Filled.PlayArrow, "Play", onPlay)
+            IconTile(Icons.Filled.PlayArrow, vnString(R.string.vn_play), onPlay)
         } else {
-            DeckButton("Play", Icons.Filled.PlayArrow, onPlay, primary = true)
+            DeckButton(vnString(R.string.vn_play), Icons.Filled.PlayArrow, onPlay, primary = true)
         }
         Spacer(Modifier.width(6.dp))
         Box(
@@ -993,7 +997,7 @@ private fun DeckListRow(
                 .clickable(onClick = onMenu)
                 .size(44.dp),
         ) {
-            Icon(Icons.Filled.MoreVert, contentDescription = "Game options", tint = cs.onSurfaceVariant)
+            Icon(Icons.Filled.MoreVert, contentDescription = vnString(R.string.vn_game_options), tint = cs.onSurfaceVariant)
         }
     }
 }
@@ -1015,14 +1019,14 @@ private fun DeckEmptyLibrary(modifier: Modifier, addRequester: FocusRequester, o
                 .padding(28.dp),
         ) {
             Icon(Icons.Filled.SportsEsports, contentDescription = null, tint = cs.primary, modifier = Modifier.size(48.dp))
-            Text("Your library is empty", color = cs.onSurface, fontFamily = SoraFamily, fontWeight = FontWeight.Bold, fontSize = 22.sp)
+            Text(vnString(R.string.vn_your_library_is_empty), color = cs.onSurface, fontFamily = SoraFamily, fontWeight = FontWeight.Bold, fontSize = 22.sp)
             Text(
-                "Add a game you already have on this device, or install one from a store on the Stores tab.",
+                vnString(R.string.vn_add_a_game_you_already_have_on_this_device_or_instal),
                 color = cs.onSurfaceVariant,
                 fontSize = 14.sp,
             )
             Spacer(Modifier.height(6.dp))
-            DeckButton("Add a game", Icons.Filled.Add, onAddGame, primary = true, big = true, modifier = Modifier.focusRequester(addRequester))
+            DeckButton(vnString(R.string.vn_add_a_game), Icons.Filled.Add, onAddGame, primary = true, big = true, modifier = Modifier.focusRequester(addRequester))
         }
     }
 }
