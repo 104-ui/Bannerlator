@@ -414,7 +414,7 @@ private fun DrawerItem(
             )
             Spacer(Modifier.width(13.dp))
             Text(
-                text = screen.label,
+                text = localizedScreenTitle(screen),
                 style = MaterialTheme.typography.bodyLarge,
                 color = contentColor,
             )
@@ -461,7 +461,7 @@ private fun DrawerStoreItem(screen: Screen, onLaunchStore: (Screen) -> Unit) {
         )
         Spacer(Modifier.width(14.dp))
         Text(
-            text = screen.label,
+            text = localizedScreenTitle(screen),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -548,4 +548,21 @@ private fun SupportLink(label: String, url: String, onOpenUrl: (String) -> Unit)
             style = MaterialTheme.typography.bodyMedium
         )
     }
+}
+
+@Composable
+internal fun localizedScreenTitle(screen: Screen): String {
+    val title = when (screen) {
+        Screen.Games -> R.string.shortcuts
+        Screen.Containers -> R.string.containers
+        Screen.FileManager -> R.string.vn_files
+        Screen.Settings -> R.string.settings
+        Screen.Appearance -> R.string.vn_appearance
+        Screen.InputControls -> R.string.input_controls
+        Screen.Contents -> R.string.vn_contents
+        Screen.Saves -> R.string.saves
+        Screen.SaveManager -> R.string.vn_manage_saves
+        else -> return screen.label
+    }
+    return androidx.compose.ui.res.stringResource(title)
 }
