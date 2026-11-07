@@ -1,5 +1,7 @@
 package com.winlator.star.communityconfigs
 
+import java.text.Normalizer
+
 /** A canonical game ranked against a shortcut name, best first. */
 data class GameCandidate(
     val game: CanonicalGame,
@@ -21,6 +23,7 @@ object GameMatcher {
         "complete", "enhanced", "ultimate", "hd", "gold", "collection", "anniversary",
         "directors", "cut", "repack", "reloaded", "codex", "steam", "tm",
     )
+    private val TITLE_SEPARATORS = Regex("[^\\p{L}\\p{M}\\p{Nd}]+")
 
     /**
      * Splits a raw title into normalized tokens: lowercases, breaks camelCase / digit boundaries,
@@ -30,13 +33,15 @@ object GameMatcher {
         if (raw.isBlank()) return emptyList()
         // Insert spaces at camelCase and letter/digit boundaries: "Crysis3Remastered" → "Crysis 3 Remastered".
         val spaced = StringBuilder(raw.length * 2)
-        val chars = raw.toCharArray()
+        val chars = Normalizer.normalize(raw, Normalizer.Form.NFKC).toCharArray()
         for (i in chars.indices) {
             val c = chars[i]
             if (i > 0) {
                 val prev = chars[i - 1]
                 val boundary =
                     (Character.isUpperCase(c) && !Character.isUpperCase(prev)) ||
+                    (prev.isLetter() && c.isLetter() && (prev.code < 128) != (c.code < 128) &&
+                        Character.UnicodeScript.of(maxOf(prev.code, c.code)) != Character.UnicodeScript.LATIN) ||
                     (Character.isDigit(c) != Character.isDigit(prev) &&
                         (Character.isLetterOrDigit(c) && Character.isLetterOrDigit(prev)))
                 if (boundary) spaced.append(' ')
@@ -45,7 +50,7 @@ object GameMatcher {
         }
         return spaced.toString()
             .lowercase()
-            .split(Regex("[^a-z0-9]+"))
+            .split(TITLE_SEPARATORS)
             .filter { it.isNotEmpty() && it !in NOISE_TOKENS }
     }
 
@@ -64,6 +69,8 @@ object GameMatcher {
             val exact = qSet == gSet
             val inter = qSet.count { it in gSet }
             if (inter == 0 && !exact) continue
+            // A shared sequel number is not evidence for otherwise unrelated titles.
+            if (!exact && qSet.none { it in gSet && !it.all(Char::isDigit) }) continue
 
             // Score primarily by how fully the CANONICAL name is covered by the shortcut: a game
             // name fully contained in the shortcut (e.g. "Dirt 3" ⊆ "dirt 3 colin mcrae", or
