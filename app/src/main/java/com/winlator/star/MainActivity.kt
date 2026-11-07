@@ -1,5 +1,7 @@
 package com.winlator.star
 
+import androidx.compose.ui.res.stringResource as vnString
+
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -945,15 +947,14 @@ private fun ClassicAppShell(
 private fun AllFilesAccessDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
     OutlinedAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("All Files Access Required") },
+        title = { Text(vnString(R.string.vn_all_files_access_required)) },
         text = {
             Text(
-                "In order to grant access to additional storage devices such as USB storage, " +
-                "the All Files Access permission must be granted. Press OK to open Android Settings."
+                vnString(R.string.vn_in_order_to_grant_access_to_additional_storage_devic)
             )
         },
         confirmButton = { TextButton(onClick = onConfirm) { Text("OK") } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(vnString(R.string.cancel)) } },
     )
 }
 
