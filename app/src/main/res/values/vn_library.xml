@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vn_nav_home">Home</string>
+    <string name="vn_nav_stores">Stores</string>
+    <string name="vn_nav_components">Components</string>
+    <string name="vn_nav_controls">Controls</string>
+    <string name="vn_nav_tools">Tools</string>
+    <string name="vn_nav_more">More</string>
+    <string name="vn_nav_general">GENERAL</string>
+    <string name="vn_nav_environment">ENVIRONMENT</string>
+    <string name="vn_nav_drives">DRIVES</string>
+    <string name="vn_nav_win_components">WIN COMPONENTS</string>
+    <string name="vn_nav_advanced">ADVANCED</string>
+    <string name="vn_nav_env_short">ENV</string>
+    <string name="vn_nav_win_short">WIN COMP</string>
+    <string name="vn_nav_add_count">Add %1$d</string>
+    <string name="vn_nav_skipped">%1$d already added</string>
+    <string name="vn_nav_import_mixed">Added %1$d, %2$d failed — %3$s</string>
+    <string name="vn_nav_comp_count">Components (%1$d)</string>
+    <plurals name="vn_found">
+        <item quantity="one">Found %d game</item>
+        <item quantity="other">Found %d games</item>
+    </plurals>
+    <plurals name="vn_added">
+        <item quantity="one">Added %d game</item>
+        <item quantity="other">Added %d games</item>
+    </plurals>
+    <plurals name="vn_android_added">
+        <item quantity="one">Added %d Android game</item>
+        <item quantity="other">Added %d Android games</item>
+    </plurals>
+</resources>
