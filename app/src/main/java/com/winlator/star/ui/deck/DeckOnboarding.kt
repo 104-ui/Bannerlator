@@ -1,5 +1,9 @@
 package com.winlator.star.ui.deck
 
+import androidx.compose.ui.res.stringResource as vnString
+
+import com.winlator.star.R
+
 import android.Manifest
 import android.content.Context
 import android.content.Intent
@@ -90,13 +94,13 @@ import com.winlator.star.ui.theme.themePresets
 
 /** The seven first-run steps, in order. */
 private val ONBOARDING_STEPS = listOf(
-    "Welcome to Bannerlator",
-    "Access to your files",
-    "Notifications",
-    "Make it yours",
-    "Installing the base system",
-    "Sign in to your stores (optional)",
-    "You're ready",
+    R.string.vn_welcome_to_bannerlator,
+    R.string.vn_access_to_your_files,
+    R.string.vn_notifications,
+    R.string.vn_make_it_yours,
+    R.string.vn_installing_the_base_system,
+    R.string.vn_sign_in_to_your_stores_optional,
+    R.string.vn_you_re_ready,
 )
 
 /** The one interface size the first run offers: Compact, Appearance's UI size at 80%. The full slider stays in Appearance. */
@@ -267,7 +271,7 @@ private fun DeckOnboardingContent(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     OnboardingMark(40)
                     Spacer(Modifier.width(12.dp))
-                    Text("Set up Bannerlator", color = cs.onSurface, fontFamily = SoraFamily, fontWeight = FontWeight.ExtraBold, fontSize = 20.sp)
+                    Text(vnString(R.string.vn_set_up_bannerlator), color = cs.onSurface, fontFamily = SoraFamily, fontWeight = FontWeight.ExtraBold, fontSize = 20.sp)
                 }
                 Spacer(Modifier.height(14.dp))
                 LinearProgressIndicator(
@@ -307,7 +311,7 @@ private fun StepPanel(step: Int, modifier: Modifier) {
     ) {
         OnboardingMark(64)
         Spacer(Modifier.height(24.dp))
-        Text("Set up Bannerlator", color = cs.onSurface, fontFamily = SoraFamily, fontWeight = FontWeight.ExtraBold, fontSize = 28.sp, lineHeight = 32.sp)
+        Text(vnString(R.string.vn_set_up_bannerlator), color = cs.onSurface, fontFamily = SoraFamily, fontWeight = FontWeight.ExtraBold, fontSize = 28.sp, lineHeight = 32.sp)
         Spacer(Modifier.height(20.dp))
         ONBOARDING_STEPS.forEachIndexed { i, label ->
             val current = i == step
@@ -336,7 +340,7 @@ private fun StepPanel(step: Int, modifier: Modifier) {
                 }
                 Spacer(Modifier.width(14.dp))
                 Text(
-                    text = label,
+                    text = vnString(label),
                     color = if (current) cs.onSurface else cs.onSurfaceVariant,
                     fontWeight = if (current) FontWeight.ExtraBold else FontWeight.SemiBold,
                     fontSize = 15.sp,
@@ -388,7 +392,7 @@ private fun StepBody(
 ) {
     val cs = MaterialTheme.colorScheme
     Text(
-        text = "STEP ${step + 1} OF ${ONBOARDING_STEPS.size}",
+        text = vnString(R.string.vn_step_counter, step + 1, ONBOARDING_STEPS.size),
         color = cs.primary,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 13.sp,
@@ -396,7 +400,7 @@ private fun StepBody(
     )
     Spacer(Modifier.height(10.dp))
     Text(
-        text = ONBOARDING_STEPS[step],
+        text = vnString(ONBOARDING_STEPS[step]),
         color = cs.onSurface,
         fontFamily = SoraFamily,
         fontWeight = FontWeight.ExtraBold,
@@ -407,13 +411,13 @@ private fun StepBody(
     Spacer(Modifier.height(14.dp))
     Text(
         text = when (step) {
-            0 -> "Run Windows and Linux PC games on this device. Setup takes about a minute — the base system installs while you go through it."
-            1 -> "Bannerlator needs \"All files access\" to read games, installers and saves on internal storage, SD cards and USB drives. Nothing is uploaded."
-            2 -> "Get notified about finished downloads, unpacking progress, Steam chat and app updates."
-            3 -> "Pick a colour theme, the interface style and how big things are. All of it can be changed later in Settings › Appearance."
-            4 -> "Wait here if it isn't finished yet. You can't start games until this completes."
-            5 -> "Bring in games you own. Skip if you only play your own installers."
-            else -> "Add a game from a store, or install one from a file with \"Add a game\"."
+            0 -> vnString(R.string.vn_run_windows_and_linux_pc_games_on_this_device_setup)
+            1 -> vnString(R.string.vn_bannerlator_needs_all_files_access_to_read_games_ins)
+            2 -> vnString(R.string.vn_get_notified_about_finished_downloads_unpacking_prog)
+            3 -> vnString(R.string.vn_pick_a_colour_theme_the_interface_style_and_how_big)
+            4 -> vnString(R.string.vn_wait_here_if_it_isn_t_finished_yet_you_can_t_start_g)
+            5 -> vnString(R.string.vn_bring_in_games_you_own_skip_if_you_only_play_your_ow)
+            else -> vnString(R.string.vn_add_a_game_from_a_store_or_install_one_from_a_file_w)
         },
         color = cs.onSurfaceVariant,
         fontSize = 16.sp,
@@ -424,31 +428,31 @@ private fun StepBody(
 
     when (step) {
         0 -> DeckCard {
-            DeckRow(title = "Get started", subtitle = "Seven short steps; every one of them can be skipped.", trailing = {
-                DeckButton("Get started", null, onNext)
+            DeckRow(title = vnString(R.string.vn_get_started), subtitle = vnString(R.string.vn_seven_short_steps_every_one_of_them_can_be_skipped), trailing = {
+                DeckButton(vnString(R.string.vn_get_started), null, onNext)
             })
         }
         1 -> DeckCard {
             DeckRow(
-                title = "Allow file access",
-                subtitle = if (filesOk) "Granted." else "Opens Android settings; come back and setup continues.",
-                trailing = { if (filesOk) GrantedMark() else DeckButton("Allow file access", null, onRequestFiles) },
+                title = vnString(R.string.vn_allow_file_access),
+                subtitle = if (filesOk) vnString(R.string.vn_granted) else vnString(R.string.vn_opens_android_settings_come_back_and_setup_continues),
+                trailing = { if (filesOk) GrantedMark() else DeckButton(vnString(R.string.vn_allow_file_access), null, onRequestFiles) },
             )
             DeckRowDivider()
             DeckRow(
-                title = "Not now",
-                subtitle = "You can grant it later from Android's app settings. Games on shared storage won't open until you do.",
-                trailing = { DeckButton("Not now", null, onNext) },
+                title = vnString(R.string.vn_not_now),
+                subtitle = vnString(R.string.vn_you_can_grant_it_later_from_android_s_app_settings_g),
+                trailing = { DeckButton(vnString(R.string.vn_not_now), null, onNext) },
             )
         }
         2 -> DeckCard {
             DeckRow(
-                title = "Allow notifications",
-                subtitle = if (notifOk) "Granted." else null,
-                trailing = { if (notifOk) GrantedMark() else DeckButton("Allow notifications", null, onRequestNotifications) },
+                title = vnString(R.string.vn_allow_notifications),
+                subtitle = if (notifOk) vnString(R.string.vn_granted) else null,
+                trailing = { if (notifOk) GrantedMark() else DeckButton(vnString(R.string.vn_allow_notifications), null, onRequestNotifications) },
             )
             DeckRowDivider()
-            DeckRow(title = "Skip", trailing = { DeckButton("Skip", null, onNext) })
+            DeckRow(title = vnString(R.string.vn_skip), trailing = { DeckButton(vnString(R.string.vn_skip), null, onNext) })
         }
         3 -> {
             val presetIndex by AppThemeState.presetIndex.collectAsState()
@@ -458,7 +462,7 @@ private fun StepBody(
             LaunchedEffect(Unit) { AppThemeState.setUiScale(UI_SIZE_COMPACT) }
             DeckCard {
                 Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Text("Theme", color = cs.onSurface, fontFamily = SoraFamily, fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
+                    Text(vnString(R.string.theme), color = cs.onSurface, fontFamily = SoraFamily, fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         // The last slot is "Custom", which needs Appearance's colour picker.
                         themePresets.forEachIndexed { i, preset ->
@@ -470,15 +474,15 @@ private fun StepBody(
                 }
                 DeckRowDivider()
                 Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Text("Interface style", color = cs.onSurface, fontFamily = SoraFamily, fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
+                    Text(vnString(R.string.vn_interface_style), color = cs.onSurface, fontFamily = SoraFamily, fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
                     Text(
-                        "Classic is the drawer and top bar; choosing it closes this setup and switches straight away.",
+                        vnString(R.string.vn_classic_is_the_drawer_and_top_bar_choosing_it_closes),
                         color = cs.onSurfaceVariant,
                         fontSize = 13.5.sp,
                     )
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         DeckChoiceChip("Deck", uiStyle == AppThemeState.UI_STYLE_DECK) { AppThemeState.setUiStyle(AppThemeState.UI_STYLE_DECK) }
-                        DeckChoiceChip("Classic", uiStyle == AppThemeState.UI_STYLE_CLASSIC) {
+                        DeckChoiceChip(vnString(R.string.vn_classic), uiStyle == AppThemeState.UI_STYLE_CLASSIC) {
                             AppThemeState.setUiStyle(AppThemeState.UI_STYLE_CLASSIC)
                             onFinish(false)
                         }
@@ -486,9 +490,9 @@ private fun StepBody(
                 }
                 DeckRowDivider()
                 Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Text("Interface size", color = cs.onSurface, fontFamily = SoraFamily, fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
+                    Text(vnString(R.string.vn_interface_size), color = cs.onSurface, fontFamily = SoraFamily, fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                        DeckChoiceChip("Compact", kotlin.math.abs(uiScale - UI_SIZE_COMPACT) < 0.01f) { AppThemeState.setUiScale(UI_SIZE_COMPACT) }
+                        DeckChoiceChip(vnString(R.string.vn_compact), kotlin.math.abs(uiScale - UI_SIZE_COMPACT) < 0.01f) { AppThemeState.setUiScale(UI_SIZE_COMPACT) }
                     }
                 }
             }
@@ -496,11 +500,11 @@ private fun StepBody(
         4 -> {
             DeckCard {
                 DeckRow(
-                    title = if (installReady) "Base system installed" else "Installing…",
+                    title = if (installReady) vnString(R.string.vn_base_system_installed) else vnString(R.string.vn_installing),
                     subtitle = when {
-                        !installing -> "Everything the games need is already on this device."
-                        installReady -> "Done. Continue to finish setting up."
-                        else -> "$installProgress% — this runs once and takes about a minute."
+                        !installing -> vnString(R.string.vn_everything_the_games_need_is_already_on_this_device)
+                        installReady -> vnString(R.string.vn_done_continue_to_finish_setting_up)
+                        else -> vnString(R.string.vn_install_percent, installProgress)
                     },
                     trailing = { if (installReady) GrantedMark() },
                 )
@@ -521,28 +525,28 @@ private fun StepBody(
                     val signedIn = stores[store] == true
                     DeckRow(
                         title = store.label,
-                        subtitle = if (signedIn) "Signed in" else null,
+                        subtitle = if (signedIn) vnString(R.string.vn_signed_in) else null,
                         trailing = {
                             if (signedIn) GrantedMark()
-                            else DeckButton("Sign in", null, { onLaunchStore(store) })
+                            else DeckButton(vnString(R.string.vn_sign_in), null, { onLaunchStore(store) })
                         },
                     )
                 }
                 DeckRowDivider()
                 DeckRow(
-                    title = "I don't use stores — hide them",
+                    title = vnString(R.string.vn_i_don_t_use_stores_hide_them),
                     trailing = { Switch(checked = !showStores, onCheckedChange = { AppThemeState.setShowStores(!it) }) },
                 )
                 DeckRowDivider()
-                DeckRow(title = "Skip", trailing = { DeckButton("Skip", null, onNext) })
+                DeckRow(title = vnString(R.string.vn_skip), trailing = { DeckButton(vnString(R.string.vn_skip), null, onNext) })
             }
         }
         else -> DeckCard {
-            DeckRow(title = "Add a game", subtitle = "Pick an installer or a game folder on this device.", trailing = {
-                DeckButton("Add a game", null, { onFinish(true) })
+            DeckRow(title = vnString(R.string.vn_add_a_game), subtitle = vnString(R.string.vn_pick_an_installer_or_a_game_folder_on_this_device), trailing = {
+                DeckButton(vnString(R.string.vn_add_a_game), null, { onFinish(true) })
             })
             DeckRowDivider()
-            DeckRow(title = "Go to library", trailing = { DeckButton("Go to library", null, { onFinish(false) }) })
+            DeckRow(title = vnString(R.string.vn_go_to_library), trailing = { DeckButton(vnString(R.string.vn_go_to_library), null, { onFinish(false) }) })
         }
     }
 }
@@ -550,7 +554,7 @@ private fun StepBody(
 /** A small accent check used where a step's action is already done. */
 @Composable
 private fun GrantedMark() {
-    Icon(Icons.Filled.CheckCircle, contentDescription = "Done", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(28.dp))
+    Icon(Icons.Filled.CheckCircle, contentDescription = vnString(R.string.wrapper_catalog_close), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(28.dp))
 }
 
 @Composable
@@ -566,7 +570,7 @@ private fun NavButtons(
 ) {
     val cont: @Composable () -> Unit = {
         OnboardingButton(
-            label = if (step == last) "Start playing" else "Continue",
+            label = if (step == last) vnString(R.string.vn_start_playing) else vnString(R.string._continue),
             icon = if (step == last) Icons.Filled.SportsEsports else Icons.AutoMirrored.Filled.ArrowForward,
             glyph = "A" to GlyphKind.A,
             primary = true,
@@ -577,8 +581,8 @@ private fun NavButtons(
     }
     val secondary: @Composable () -> Unit = {
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            if (step > 0) OnboardingButton("Back", Icons.AutoMirrored.Filled.ArrowBack, "B" to GlyphKind.B, primary = false, onClick = onBack)
-            OnboardingButton("Skip setup", null, null, primary = false, onClick = onSkip)
+            if (step > 0) OnboardingButton(vnString(R.string.vn_back), Icons.AutoMirrored.Filled.ArrowBack, "B" to GlyphKind.B, primary = false, onClick = onBack)
+            OnboardingButton(vnString(R.string.vn_skip_setup), null, null, primary = false, onClick = onSkip)
         }
     }
     if (compact) {
