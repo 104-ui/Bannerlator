@@ -1,5 +1,7 @@
 package com.winlator.star.ui.screens
 
+import com.winlator.star.R
+
 import android.content.Context
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -49,7 +51,7 @@ internal fun xmbGameActions(
     if (AndroidGames.isAndroidEntry(shortcut)) {
         add(XmbAction("Game Details", Icons.Filled.Edit, "Name, genres, year, description", menu = { xmbGameDetailsMenu(it, shortcut) }))
         add(XmbAction("Scrape cover", Icons.Filled.Search, menu = { xmbScrapeCoverMenu(it, shortcut) }))
-        add(XmbAction("Add to home screen", Icons.Filled.AddToHomeScreen, "Android's pin prompt") { addToHomeScreen(context, shortcut) })
+        add(XmbAction(context.getString(R.string.add_to_home_screen), Icons.Filled.AddToHomeScreen, context.getString(R.string.vn_android_s_pin_prompt)) { addToHomeScreen(context, shortcut) })
         add(XmbAction("Remove", Icons.Filled.Delete, "Asks to confirm first", danger = true, menu = { xmbRemoveMenu(it, shortcut, host) }))
         return@buildList
     }
@@ -59,7 +61,7 @@ internal fun xmbGameActions(
         add(XmbAction("Settings", Icons.Filled.Settings, "Steam (Linux) display, driver, controls…") { openSettings(shortcut) })
         add(XmbAction("Game Details", Icons.Filled.Edit, "Name, genres, year, description", menu = { xmbGameDetailsMenu(it, shortcut) }))
         add(XmbAction("Scrape cover", Icons.Filled.Search, menu = { xmbScrapeCoverMenu(it, shortcut) }))
-        add(XmbAction("Add to home screen", Icons.Filled.AddToHomeScreen, "Android's pin prompt") { addToHomeScreen(context, shortcut) })
+        add(XmbAction(context.getString(R.string.add_to_home_screen), Icons.Filled.AddToHomeScreen, context.getString(R.string.vn_android_s_pin_prompt)) { addToHomeScreen(context, shortcut) })
         add(XmbAction("Properties", Icons.Filled.Info, "Times played, playtime", menu = { xmbPropertiesMenu(it, shortcut) }))
         add(XmbAction("Remove", Icons.Filled.Delete, "Asks to confirm first", danger = true, menu = { xmbRemoveMenu(it, shortcut, host) }))
         return@buildList
@@ -83,7 +85,7 @@ internal fun xmbGameActions(
     add(XmbAction("Clone to container", Icons.Filled.ContentCopy, menu = { xmbCloneMenu(it, shortcut, host) }))
     add(XmbAction("Copy to Drive C…", Icons.Filled.DriveFileMove, menu = { xmbCopyToDriveCMenu(it, shortcut) }))
     add(XmbAction("Change executable…", Icons.Filled.SwapHoriz, menu = { xmbChangeExeMenu(it, shortcut) }))
-    add(XmbAction("Add to home screen", Icons.Filled.AddToHomeScreen, "Android's pin prompt") { addToHomeScreen(context, shortcut) })
+    add(XmbAction(context.getString(R.string.add_to_home_screen), Icons.Filled.AddToHomeScreen, context.getString(R.string.vn_android_s_pin_prompt)) { addToHomeScreen(context, shortcut) })
     add(XmbAction("Export", Icons.Filled.Upload) { exportShortcut(context, shortcut) })
     add(XmbAction("Properties", Icons.Filled.Info, "Times played, playtime", menu = { xmbPropertiesMenu(it, shortcut) }))
     add(XmbAction("Remove", Icons.Filled.Delete, "Asks to confirm first", danger = true, menu = { xmbRemoveMenu(it, shortcut, host) }))
