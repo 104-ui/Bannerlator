@@ -1,5 +1,7 @@
 package com.winlator.star.ui.screens
 
+import androidx.compose.ui.res.stringResource
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
@@ -82,11 +84,11 @@ private val SPARKLE_SPECS: List<SparkleSpec> = run {
 }
 
 private val STATUS_LABELS = listOf(
-    "Installing system files",
-    "Extracting Wine prefix",
-    "Setting up Proton",
-    "Configuring runtime",
-    "Finalizing setup",
+    R.string.vn_install_phase_files,
+    R.string.vn_install_phase_prefix,
+    R.string.vn_install_phase_proton,
+    R.string.vn_install_phase_runtime,
+    R.string.vn_install_phase_finish,
 )
 
 @Composable
@@ -103,8 +105,8 @@ fun SplashScreen(
         label = "counter",
     )
 
-    val statusText = if (progress >= 100) "Installation complete"
-                     else STATUS_LABELS[minOf((progress / 22), STATUS_LABELS.size - 1)]
+    val statusText = if (progress >= 100) stringResource(R.string.vn_install_done)
+                     else stringResource(STATUS_LABELS[minOf((progress / 22), STATUS_LABELS.size - 1)])
 
     val dotPhase by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -206,7 +208,7 @@ fun SplashScreen(
                         shape   = RoundedCornerShape(8.dp),
                         modifier = Modifier.fillMaxWidth(),
                     ) {
-                        Text("Proceed", color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.SemiBold)
+                        Text(stringResource(R.string.vn_proceed), color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.SemiBold)
                     }
                 }
             }
