@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vn_nav_home">ホーム</string>
+    <string name="vn_nav_stores">ストア</string>
+    <string name="vn_nav_components">コンポーネント</string>
+    <string name="vn_nav_controls">操作</string>
+    <string name="vn_nav_tools">ツール</string>
+    <string name="vn_nav_more">その他</string>
+    <string name="vn_nav_general">一般</string>
+    <string name="vn_nav_environment">環境変数</string>
+    <string name="vn_nav_drives">ドライブ</string>
+    <string name="vn_nav_win_components">Windows 部品</string>
+    <string name="vn_nav_advanced">詳細設定</string>
+    <string name="vn_nav_env_short">環境</string>
+    <string name="vn_nav_win_short">部品</string>
+    <string name="vn_nav_add_count">%1$d件を追加</string>
+    <string name="vn_nav_skipped">登録済み：%1$d件</string>
+    <string name="vn_nav_import_mixed">追加：%1$d件、失敗：%2$d件（%3$s）</string>
+    <string name="vn_nav_comp_count">コンポーネント（%1$d）</string>
+    <plurals name="vn_found">
+        <item quantity="other">%d件のゲームが見つかりました</item>
+    </plurals>
+    <plurals name="vn_added">
+        <item quantity="other">%d件のゲームを追加しました</item>
+    </plurals>
+    <plurals name="vn_android_added">
+        <item quantity="other">Android ゲームを%d件追加しました</item>
+    </plurals>
+</resources>
