@@ -1,5 +1,7 @@
 package com.winlator.star.ui.screens
 
+import androidx.compose.ui.res.stringResource as vnString
+
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -204,10 +206,10 @@ fun ContainersScreen(
             // the field state as the seed for future new containers) via the EDIT_DEFAULTS_ID sentinel.
             // Containers screen only. Sits next to the import action.
             IconButton(onClick = { onNavigateToDetail(ContainerDetailViewModel.EDIT_DEFAULTS_ID) }) {
-                Icon(Icons.Filled.Settings, contentDescription = "New container defaults", tint = androidx.compose.ui.graphics.Color.White)
+                Icon(Icons.Filled.Settings, contentDescription = vnString(R.string.new_container_defaults), tint = androidx.compose.ui.graphics.Color.White)
             }
             IconButton(onClick = { showImportPicker = true }) {
-                Icon(Icons.Filled.FileDownload, contentDescription = "Import container", tint = androidx.compose.ui.graphics.Color.White)
+                Icon(Icons.Filled.FileDownload, contentDescription = vnString(R.string.vn_import_container), tint = androidx.compose.ui.graphics.Color.White)
             }
         }
     }
@@ -288,7 +290,7 @@ fun ContainersScreen(
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.primary),
         ) {
-            Icon(imageVector = Icons.Filled.Add, contentDescription = "Add container", tint = MaterialTheme.colorScheme.onPrimary)
+            Icon(imageVector = Icons.Filled.Add, contentDescription = vnString(R.string.vn_add_container), tint = MaterialTheme.colorScheme.onPrimary)
         }
 
         // Loading overlay
