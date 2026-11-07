@@ -1,4 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
+
+import androidx.compose.ui.res.stringResource as vnString
 package com.winlator.star.ui.screens
 
 import androidx.compose.runtime.mutableIntStateOf
@@ -230,7 +232,7 @@ fun ContainerDetailScreen(
                 else
                     MaterialTheme.colorScheme.primary
             ) {
-                Icon(Icons.Default.Check, contentDescription = "Confirm")
+                Icon(Icons.Default.Check, contentDescription = vnString(R.string.vn_confirm))
             }
         }
     ) { padding ->
@@ -243,12 +245,12 @@ fun ContainerDetailScreen(
 
         val activeTab = tabTitles.getOrNull(viewModel.selectedTab) ?: "GENERAL"
         val screenTitle = when {
-            viewModel.defaultsMode -> "New Container Defaults"
-            containerId <= 0 -> "New Container"
-            else -> "Edit Container"
+            viewModel.defaultsMode -> vnString(R.string.new_container_defaults)
+            containerId <= 0 -> vnString(R.string.new_container)
+            else -> vnString(R.string.edit_container)
         }
         val railLinks = buildList {
-            add(RailLink("What is all this?", Icons.Filled.Help) { glossaryQuery = "" })
+            add(RailLink(vnString(R.string.vn_what_is_all_this), Icons.Filled.Help) { glossaryQuery = "" })
             if (viewModel.defaultsMode) {
                 add(RailLink(stringResource(R.string.reset_to_app_defaults), Icons.Filled.Restore) { viewModel.resetDefaults() })
             }
@@ -333,7 +335,7 @@ fun ContainerDetailScreen(
                         RailSection(
                             header = null,
                             items = tabTitles.mapIndexed { index, tab ->
-                                RailItem(tab, tabIcon(tab), index == viewModel.selectedTab) { viewModel.selectedTab = index }
+                                RailItem(tabDisplayName(tab), tabIcon(tab), index == viewModel.selectedTab) { viewModel.selectedTab = index }
                             },
                         )
                     ),
@@ -345,7 +347,7 @@ fun ContainerDetailScreen(
                     // content (mockup: "ctxhdr") — the user never loses their place.
                     if (railCollapsed) {
                         Text(
-                            activeTab,
+                            tabDisplayName(activeTab),
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
@@ -534,9 +536,13 @@ private fun tabIcon(title: String): ImageVector = when (title) {
 
 /** Abbreviates the two long tab titles so the portrait top bar stays tidy (mirrors the rail's
  *  collapsed labels). */
-private fun topTabLabel(title: String): String = when (title) {
-    "ENVIRONMENT" -> "ENV"
-    "WIN COMPONENTS" -> "WIN COMP"
+@Composable
+private fun tabDisplayName(title: String, compact: Boolean = false): String = when (title) {
+    "GENERAL" -> vnString(R.string.vn_nav_general)
+    "ENVIRONMENT" -> vnString(if (compact) R.string.vn_nav_env_short else R.string.vn_nav_environment)
+    "DRIVES" -> vnString(R.string.vn_nav_drives)
+    "WIN COMPONENTS" -> vnString(if (compact) R.string.vn_nav_win_short else R.string.vn_nav_win_components)
+    "ADVANCED" -> vnString(R.string.vn_nav_advanced)
     else -> title
 }
 
@@ -564,7 +570,7 @@ private fun ContainerTopTabs(
                 val active = index == selected
                 TopCell(
                     icon = tabIcon(tab),
-                    label = topTabLabel(tab),
+                    label = tabDisplayName(tab, compact = true),
                     tint = if (active) MaterialTheme.colorScheme.primary
                            else MaterialTheme.colorScheme.onSurfaceVariant,
                     highlight = active,
