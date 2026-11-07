@@ -217,7 +217,7 @@ fun ContainersScreen(
         Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
         if (containers.isEmpty() && !isLoading) {
             Text(
-                text = "No containers yet. Tap + to create one.",
+                text = vnString(R.string.vn_no_containers),
                 color = OnSurfaceVariant,
                 modifier = Modifier.align(Alignment.Center),
             )
