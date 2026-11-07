@@ -1,6 +1,9 @@
 @file:OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 
+
 package com.winlator.star.ui.screens
+
+import androidx.compose.ui.res.stringResource as vnString
 
 import com.winlator.star.core.PresetScope
 import com.winlator.star.core.PresetOverrides
@@ -4309,7 +4312,7 @@ private fun ShortcutOverflowButton(
             MenuItemDivider()
             DropdownMenuItem(
                     enabled = installed,
-                text = { Text("Add to home screen") },
+                text = { Text(vnString(R.string.add_to_home_screen)) },
                 leadingIcon = { Icon(Icons.Filled.AddToHomeScreen, null) },
                 onClick = { menuExpanded = false; onAddToHome() },
             )
@@ -4617,7 +4620,7 @@ private fun ShortcutGridItem(
                 DropdownMenuItem(enabled = installed, text = { Text("Change executable…") }, leadingIcon = { Icon(Icons.Filled.SwapHoriz, null, tint = MaterialTheme.colorScheme.primary) }, onClick = { menuExpanded = false; onChangeExe() })
             }
             MenuItemDivider()
-            DropdownMenuItem(enabled = installed, text = { Text("Add to home screen") }, leadingIcon = { Icon(Icons.Filled.AddToHomeScreen, null) }, onClick = { menuExpanded = false; onAddToHome() })
+            DropdownMenuItem(enabled = installed, text = { Text(vnString(R.string.add_to_home_screen)) }, leadingIcon = { Icon(Icons.Filled.AddToHomeScreen, null) }, onClick = { menuExpanded = false; onAddToHome() })
             if (onExport != null) {
                 MenuItemDivider()
                 DropdownMenuItem(enabled = installed, text = { Text("Export") }, leadingIcon = { Icon(Icons.Filled.Upload, null) }, onClick = { menuExpanded = false; onExport() })
@@ -9884,9 +9887,15 @@ internal fun addToHomeScreen(context: Context, shortcut: Shortcut) {
                 .setIcon(Icon.createWithBitmap(bmp))
                 .setIntent(intent)
                 .build()
-            sm.requestPinShortcut(info, null)
+            if (!sm.requestPinShortcut(info, null)) {
+                Toast.makeText(context, R.string.vn_couldn_t_request_a_home_screen_shortcut, Toast.LENGTH_LONG).show()
+            }
+        } else {
+            Toast.makeText(context, R.string.vn_your_launcher_doesn_t_support_pinned_shortcuts, Toast.LENGTH_LONG).show()
         }
-    } catch (_: Exception) {}
+    } catch (_: Exception) {
+        Toast.makeText(context, R.string.vn_couldn_t_request_a_home_screen_shortcut, Toast.LENGTH_LONG).show()
+    }
 }
 
 internal fun exportShortcut(context: Context, shortcut: Shortcut) {
