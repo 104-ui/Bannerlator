@@ -788,7 +788,7 @@ private fun ClassicAppShell(
                 else -> context.getString(R.string.new_container)
             }
         }
-        else -> Screen.drawerItems.firstOrNull { it.route == currentRoute }?.label ?: "Winlator"
+        else -> Screen.drawerItems.firstOrNull { it.route == currentRoute }?.let { com.winlator.star.ui.localizedScreenTitle(it) } ?: "Winlator"
     }
 
     // The Games tab's XMB view asks for a see-through top bar; the screen is then laid out under the
