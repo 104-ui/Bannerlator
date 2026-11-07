@@ -29,4 +29,18 @@
         <item quantity="one">Added %d Android game</item>
         <item quantity="other">Added %d Android games</item>
     </plurals>
+    <string name="vn_install_phase_files">Installing system files</string>
+    <string name="vn_install_phase_prefix">Extracting Wine prefix</string>
+    <string name="vn_install_phase_proton">Setting up Proton</string>
+    <string name="vn_install_phase_runtime">Configuring runtime</string>
+    <string name="vn_install_phase_finish">Finalizing setup</string>
+    <string name="vn_install_done">Installation complete</string>
+    <string name="vn_proceed">Proceed</string>
+    <string name="vn_no_games">No shortcuts yet.</string>
+    <string name="vn_no_containers">No containers yet. Tap + to create one.</string>
+    <string name="vn_add_shortcut">Add Shortcut</string>
+    <string name="vn_contents">Contents</string>
+    <string name="vn_files">File Manager</string>
+    <string name="vn_appearance">Appearance</string>
+    <string name="vn_manage_saves">Save Manager</string>
 </resources>
