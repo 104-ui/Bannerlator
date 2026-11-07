@@ -506,7 +506,7 @@ fun ShortcutsScreen(vm: ShortcutsViewModel = viewModel()) {
         Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
             if (shortcuts.isEmpty()) {
                 Text(
-                    text = "No shortcuts yet.",
+                    text = vnString(R.string.vn_no_games),
                     color = OnSurfaceVariant,
                     modifier = Modifier.align(Alignment.Center),
                 )
@@ -636,7 +636,7 @@ fun ShortcutsScreen(vm: ShortcutsViewModel = viewModel()) {
             ) {
                 Icon(
                     Icons.Filled.Add,
-                    contentDescription = "Add Shortcut",
+                    contentDescription = vnString(R.string.vn_add_shortcut),
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(28.dp),
                 )
